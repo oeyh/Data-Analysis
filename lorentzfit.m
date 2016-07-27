@@ -71,6 +71,12 @@ function [yprime params resnorm residual] = lorentzfit(x,y,p0,bounds,nparams)
 %
 % REF: http://www.home.uos.de/kbetzler/notes/fitp.pdf
 %
+% Revised to suppress display message by Hai Yan
+% 7/27/2016
+% v1.2
+
+% Set Display option to off
+opts = optimset('Display','off');
 
 % Check inputs
 
@@ -142,7 +148,7 @@ elseif nargin==5
                 error 'Lower bounds must be less than upper bounds'; 
             end
             
-            [params resnorm residual] = lsqcurvefit(@lfun1,p0,x,y,lb,ub);
+            [params resnorm residual] = lsqcurvefit(@lfun1,p0,x,y,lb,ub,opts);
             yprime = lfun1(params,x);
             
         case '1c'
@@ -165,7 +171,7 @@ elseif nargin==5
                 error 'Lower bounds must be less than upper bounds'; 
             end
             
-            [params resnorm residual] = lsqcurvefit(@lfun1c,p0,x,y,lb,ub);
+            [params resnorm residual] = lsqcurvefit(@lfun1c,p0,x,y,lb,ub,opts);
             yprime = lfun1c(params,x);
         case '2'
             % Define P0, LB, UB
@@ -189,7 +195,7 @@ elseif nargin==5
                 error 'Lower bounds must be less than upper bounds'; 
             end
             
-            [params resnorm residual] = lsqcurvefit(@lfun2,p0,x,y,lb,ub);
+            [params resnorm residual] = lsqcurvefit(@lfun2,p0,x,y,lb,ub,opts);
             yprime = lfun2(params,x);
         case '2c'
             % Define P0, LB, UB
@@ -213,7 +219,7 @@ elseif nargin==5
                 error 'Lower bounds must be less than upper bounds'; 
             end
             
-            [params resnorm residual] = lsqcurvefit(@lfun2c,p0,x,y,lb,ub);
+            [params resnorm residual] = lsqcurvefit(@lfun2c,p0,x,y,lb,ub,opts);
             yprime = lfun2c(params,x);
         case '3'
             % Define P0, LB, UB
@@ -235,7 +241,7 @@ elseif nargin==5
                 error 'Lower bounds must be less than upper bounds'; 
             end
             
-            [params resnorm residual] = lsqcurvefit(@lfun3,p0,x,y,lb,ub);
+            [params resnorm residual] = lsqcurvefit(@lfun3,p0,x,y,lb,ub,opts);
             yprime = lfun3(params,x);
         case '3c'
             % Define P0, LB, UB
@@ -256,7 +262,7 @@ elseif nargin==5
                 error 'Lower bounds must be less than upper bounds'; 
             end
             
-            [params resnorm residual] = lsqcurvefit(@lfun3c,p0,x,y,lb,ub);
+            [params resnorm residual] = lsqcurvefit(@lfun3c,p0,x,y,lb,ub,opts);
             yprime = lfun3c(params,x);
         otherwise
             error 'Invalid entry for NPARAMS'
@@ -266,7 +272,7 @@ else
     error 'Invalid number of input arguments specified';
 end
 
-[params resnorm residual] = lsqcurvefit(@lfun3c,p0,x,y,lb,ub);
+[params resnorm residual] = lsqcurvefit(@lfun3c,p0,x,y,lb,ub,opts);
 yprime = lfun3c(params,x);
 
 end % MAIN
